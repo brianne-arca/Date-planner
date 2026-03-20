@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Hi Luce!</title>
+<title>Hey there! :)</title>
 <link rel="stylesheet" href="date.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
 <div id="container">
     <div id="screen">
-        <h1>HI LUCE!</h1>
+        <h1>Hey there! :)</h1>
         <button onclick="nextScreen(1)">Continue</button>
     </div>
 </div>
@@ -96,7 +96,7 @@ function restart() {
     valentineAnswered = false;
     superBowlAnswered = false;
     document.getElementById("screen").innerHTML = `
-        <h1>HI LUCE!</h1>
+        <h1>Hi there! :)</h1>
         <button onclick="nextScreen(1)">Continue</button>
     `;
 }
@@ -107,11 +107,9 @@ function pickDateScreen() {
     screenHistory.push(screen.innerHTML);
     screen.innerHTML = `
         <h2>Awesome! Pick a date:</h2>
-        <button onclick="pickDate('2026-02-06')">Friday, February 6</button>
-        <button onclick="pickDate('2026-02-08')">Sunday, February 8</button>
-        <button onclick="pickDate('2026-02-13')">Friday, February 13</button>
-        <button onclick="pickDate('2026-02-14')">Saturday, February 14</button>
-        <button onclick="pickDate('2026-02-15')">Sunday, February 15</button>
+        <button onclick="pickDate('2026-04-03')">Friday, April 3</button>
+        <button onclick="pickDate('2026-04-04')">Saturday, April 4</button>
+        <button onclick="pickDate('2026-04-05')">Sunday, April 5</button>
         <button onclick="pickDate('custom')">Enter a date manually</button>
         <div class="back-restart">
             <button onclick="goBack()">Back</button>
@@ -139,40 +137,26 @@ function pickDate(date) {
     }
 
     selectedDate = date;
+    showTimeSelectionScreen();
+}
 
-    // Valentine logic: only ask once
-    if (date === '2026-02-14' && !valentineAnswered) {
-        valentineAnswered = true;
-        screenHistory.push(screen.innerHTML);
-        screen.innerHTML = `
-            <h2>In order to select this date…</h2>
-            <h2>Will you be my Valentine? 💖</h2>
-            <button onclick="valentineAnswer(true)">Yes 💕</button>
-            <button onclick="valentineAnswer(false)">No 💔</button>
-            <div class="back-restart">
-                <button onclick="goBack()">Back</button>
-                <button onclick="restart()">Restart</button>
-            </div>
-        `;
+function submitCustomDate() {
+    const dateInput = document.getElementById("customDate").value;
+    if (!dateInput) { 
+        alert("Please pick a date!"); 
+        return; 
+    }
+
+    const selected = parseLocalDate(dateInput);
+    const today = new Date();
+    today.setHours(0,0,0,0);
+
+    if (selected < today) {
+        alert("Unless you have a time machine, it's gonna be tricky to go out on a day that's already passed 😅");
         return;
     }
 
-    // Super Bowl Sunday logic: only ask once
-    if (date === '2026-02-08' && !superBowlAnswered) {
-        superBowlAnswered = true;
-        screenHistory.push(screen.innerHTML);
-        screen.innerHTML = `
-            <h2>Am I crazy for asking a Texan out on a date on Super Bowl Sunday?</h2>
-            <p>Yes? Maybe a little, lol 😅</p>
-            <button onclick="superBowlAnswer()">Continue</button>
-            <div class="back-restart">
-                <button onclick="goBack()">Back</button>
-                <button onclick="restart()">Restart</button>
-            </div>
-        `;
-        return;
-    }
-
+    selectedDate = dateInput;
     showTimeSelectionScreen();
 }
 
