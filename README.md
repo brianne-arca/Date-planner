@@ -1,2 +1,2 @@
-# asking-luce-out
-HTML/CSS interactive date invite — for Luce only!
+# Date-Planner
+HTML/CSS interactive date planner 
